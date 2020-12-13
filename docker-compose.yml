@@ -1,0 +1,13 @@
+ 
+version: '3'
+services:
+  web:
+    build: .
+    command: npm run serve
+    ports:
+      - 1234:8080
+    volumes:
+      - ./gray-scott-model-simulator:/gray-scott-model-simulator
+    stdin_open: true
+    container_name: gray-scott-model-simulator
+    tty: true
