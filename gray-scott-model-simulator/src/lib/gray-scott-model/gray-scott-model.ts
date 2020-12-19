@@ -3,8 +3,8 @@ const SQUARE_SIZE = 20
 
 export class GrayScotModelFactory{
   create(feed: number, kill: number){
-    let material_u: number[][] = Array.from(new Array(SPACE_GRID_SIZE), () => new Array(SPACE_GRID_SIZE).fill(0))
-    let material_v: number[][] = Array.from(new Array(SPACE_GRID_SIZE), () => new Array(SPACE_GRID_SIZE).fill(1))
+    const material_u: number[][] = Array.from(new Array(SPACE_GRID_SIZE), () => new Array(SPACE_GRID_SIZE).fill(0))
+    const material_v: number[][] = Array.from(new Array(SPACE_GRID_SIZE), () => new Array(SPACE_GRID_SIZE).fill(1))
 
     const from_range = Math.floor(SPACE_GRID_SIZE / 2) - Math.floor(SQUARE_SIZE / 2);
     const to_range = Math.floor(SPACE_GRID_SIZE / 2) + Math.floor(SQUARE_SIZE / 2);

@@ -6,10 +6,10 @@ describe('GrayScotModel', () => {
     mockMath.random = () => 0.5;
     Math = mockMath;
 
-    let factory = new GrayScotModelFactory
-    let f = 0.022
-    let k = 0.051
-    let gray_scot_model = factory.create(f, k)
+    const factory = new GrayScotModelFactory
+    const f = 0.022
+    const k = 0.051
+    const gray_scot_model = factory.create(f, k)
     expect(gray_scot_model.feed).toBe(0.022);
     expect(gray_scot_model.kill).toBe(0.051);
 
