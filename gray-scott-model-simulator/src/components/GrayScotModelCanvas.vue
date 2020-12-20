@@ -10,6 +10,7 @@ import { GrayScotModelFactory } from "../lib/gray-scott-model/gray-scott-model"
 
 const SPAGE_GRIDSIZE = 256
 const SQUARE_SIZE = 20
+const VISUALIZATION_STEP = 10
 
 @Component
 export default class GrayScotModelCanvas extends Vue {
@@ -21,11 +22,17 @@ export default class GrayScotModelCanvas extends Vue {
     this.canvas = document.getElementById('gray_scot_model_canvas')
     this.ctx = this.canvas.getContext('2d')
     this.onInit(0.022, 0.051)
-    this.onDraw(this.grayScotModel.materialU)
   }
 
   private onInit(feed, kill){
     this.grayScotModel = (new GrayScotModelFactory).create(feed, kill, SPAGE_GRIDSIZE, SQUARE_SIZE)
+    this.onDraw(this.grayScotModel.materialU)
+    setInterval(this.onUpdate, 0.1)
+  }
+
+  private onUpdate(){
+    for(let i = 0; i < VISUALIZATION_STEP; i++){ this.grayScotModel.update() }
+    this.onDraw(this.grayScotModel.materialU)
   }
 
   private onDraw(materialU){
