@@ -8,6 +8,9 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { GrayScotModelFactory } from "../lib/gray-scott-model/gray-scott-model"
 
+const SPAGE_GRIDSIZE = 256
+const SQUARE_SIZE = 20
+
 @Component
 export default class GrayScotModelCanvas extends Vue {
   private canvas
@@ -18,19 +21,19 @@ export default class GrayScotModelCanvas extends Vue {
     this.canvas = document.getElementById('gray_scot_model_canvas')
     this.ctx = this.canvas.getContext('2d')
     this.onInit(0.022, 0.051)
-    this.onDraw(this.grayScotModel.material_u)
+    this.onDraw(this.grayScotModel.materialU)
   }
 
   private onInit(feed, kill){
-    this.grayScotModel = (new GrayScotModelFactory).create(feed, kill)
+    this.grayScotModel = (new GrayScotModelFactory).create(feed, kill, SPAGE_GRIDSIZE, SQUARE_SIZE)
   }
 
   private onDraw(materialU){
-    const cellWidth = Math.floor(this.canvas.width / 256)
-    const cellHeight = Math.floor(this.canvas.height / 256)
+    const cellWidth = Math.floor(this.canvas.width / SPAGE_GRIDSIZE)
+    const cellHeight = Math.floor(this.canvas.height / SPAGE_GRIDSIZE)
 
-    for(let i = 0; i < 256; i++){
-      for(let j = 0; j < 256; j++){
+    for(let i = 0; i < SPAGE_GRIDSIZE; i++){
+      for(let j = 0; j < SPAGE_GRIDSIZE; j++){
 
         const x = Math.floor(cellWidth * i)
         const y = Math.floor(cellHeight * j)
