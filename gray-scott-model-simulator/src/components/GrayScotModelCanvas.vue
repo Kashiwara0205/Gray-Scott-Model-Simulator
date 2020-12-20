@@ -47,9 +47,8 @@ export default class GrayScotModelCanvas extends Vue {
         }
 
         const colorParsentage = Math.floor(value * 100)
-        this.ctx.fillStyle = 'hsl(0, 0%,' + colorParsentage + '%)';
+        this.ctx.fillStyle = 'hsl(180, 50%,' + colorParsentage + '%)';
         this.ctx.fillRect(x, y, cellWidth, cellHeight);
-
       }
     }
   }
