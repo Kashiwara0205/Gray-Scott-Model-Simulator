@@ -1,6 +1,16 @@
 <template>
   <div>
     <canvas id="gray_scot_model_canvas" width="500" height="500" class="canvas"></canvas>
+
+    <br>
+    <button type="button">
+     <font size="5" color="#333399" @click="onStart(0.022, 0.051)">start</font>
+    </button>
+
+    <button type="button" style="margin-left: 20px;">
+     <font size="5" color="#333399" @click="onStop">stop</font>
+    </button>
+
   </div>
 </template>
 
@@ -13,24 +23,29 @@ const SQUARE_SIZE = 20
 const VISUALIZATION_STEP = 10
 
 @Component
-export default class GrayScotModelCanvas extends Vue {
+export default class GrayScotModelSimulator extends Vue {
   private canvas
   private grayScotModel
+  private interval
 
   private mounted(){  
     this.canvas = document.getElementById('gray_scot_model_canvas')
-    this.onInit(0.022, 0.051)
   }
 
-  private onInit(feed, kill){
+  private onStart(feed, kill){
+    clearInterval(this.interval);
     this.grayScotModel = (new GrayScotModelFactory).create(feed, kill, SPAGE_GRIDSIZE, SQUARE_SIZE)
     this.onDraw(this.grayScotModel.materialU)
-    setInterval(this.onUpdate, 0.01)
+    this.interval = setInterval(this.onUpdate, 0.001)
+  }
+
+  private onStop(){
+    clearInterval(this.interval);
   }
 
   private onUpdate(){
-    for(let i = 0; i < VISUALIZATION_STEP; i++){  this.grayScotModel.update() }
-    this.onDraw(this.grayScotModel.materialU)      
+    for(let i = 0; i < VISUALIZATION_STEP; i++){ this.grayScotModel.update() }
+    this.onDraw(this.grayScotModel.materialU)
   }
 
   private onDraw(materialU){

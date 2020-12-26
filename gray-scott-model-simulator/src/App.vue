@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <h1>Gray-Scot-Model Simulator</h1>
-    <GrayScotModelCanvas></GrayScotModelCanvas>
+    <GrayScotModelSimulator></GrayScotModelSimulator>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import GrayScotModelCanvas from './components/GrayScotModelCanvas.vue';
+import GrayScotModelSimulator from './components/GrayScotModelSimulator.vue';
 
 @Component({
   components: {
-    GrayScotModelCanvas
+    GrayScotModelSimulator
   },
 })
 export default class App extends Vue {}
