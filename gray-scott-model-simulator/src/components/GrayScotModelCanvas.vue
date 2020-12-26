@@ -1,6 +1,6 @@
 <template>
   <div>
-    <canvas id="gray_scot_model_canvas" width="512" height="512" class="canvas"></canvas>
+    <canvas id="gray_scot_model_canvas" width="500" height="500" class="canvas"></canvas>
   </div>
 </template>
 
@@ -8,34 +8,33 @@
 import { Component, Vue } from 'vue-property-decorator';
 import { GrayScotModelFactory } from "../lib/gray-scott-model/gray-scott-model"
 
-const SPAGE_GRIDSIZE = 256
+const SPAGE_GRIDSIZE = 100
 const SQUARE_SIZE = 20
 const VISUALIZATION_STEP = 10
 
 @Component
 export default class GrayScotModelCanvas extends Vue {
   private canvas
-  private ctx
   private grayScotModel
 
   private mounted(){  
     this.canvas = document.getElementById('gray_scot_model_canvas')
-    this.ctx = this.canvas.getContext('2d')
     this.onInit(0.022, 0.051)
   }
 
   private onInit(feed, kill){
     this.grayScotModel = (new GrayScotModelFactory).create(feed, kill, SPAGE_GRIDSIZE, SQUARE_SIZE)
     this.onDraw(this.grayScotModel.materialU)
-    setInterval(this.onUpdate, 0.1)
+    setInterval(this.onUpdate, 0.01)
   }
 
   private onUpdate(){
-    for(let i = 0; i < VISUALIZATION_STEP; i++){ this.grayScotModel.update() }
-    this.onDraw(this.grayScotModel.materialU)
+    for(let i = 0; i < VISUALIZATION_STEP; i++){  this.grayScotModel.update() }
+    this.onDraw(this.grayScotModel.materialU)      
   }
 
   private onDraw(materialU){
+    const ctx = this.canvas.getContext('2d')
     const cellWidth = Math.floor(this.canvas.width / SPAGE_GRIDSIZE)
     const cellHeight = Math.floor(this.canvas.height / SPAGE_GRIDSIZE)
 
@@ -54,8 +53,8 @@ export default class GrayScotModelCanvas extends Vue {
         }
 
         const colorParsentage = Math.floor(value * 100)
-        this.ctx.fillStyle = 'hsl(180, 50%,' + colorParsentage + '%)';
-        this.ctx.fillRect(x, y, cellWidth, cellHeight);
+        ctx.fillStyle = 'hsl(180, 50%,' + colorParsentage + '%)';
+        ctx.fillRect(x, y, cellWidth, cellHeight);
       }
     }
   }
