@@ -1,29 +1,34 @@
 <template>
   <div id="gray-scot-model-simulator-container">
-    <div id="output">
-      <canvas id="gray_scot_model_canvas" width="500" height="500" class="canvas"></canvas>
-    </div>
+    <canvas id="gray_scot_model_canvas" width="500" height="500" class="canvas"></canvas>
+    
     <br>
+
     <div id="operation" style="padding-top: 5px;">
 
-      <font style="margin-left: 20px; padding-top: 50px;" size="5" color="#333399">feed: </font> 
-      <input type="number" size="10" v-model.number="feed" maxlength="10"> 
-      <font style="margin-left: 20px;" size="5" color="#333399">kill: </font> 
-      <input type="number" size="10" v-model.number="kill" maxlength="10"> 
+      <el-row :gutter="20" style="padding-left: 15px; padding-top: 15px;">
+       <el-col :span="20">
+          <div style="padding-bottom: 5px">
+            <b> Feed Value: </b>
+          </div>
+        <el-input type="number" size="10" placeholder="Please input Feed" v-model.number="feed"></el-input>
+       </el-col>
+      </el-row>
 
-      <br>
+      <el-row :gutter="20" style="padding-left: 15px; padding-top: 15px;">
+        <el-col :span="20">
+          <div style="padding-bottom: 5px">
+            <b> Kill Value: </b>
+          </div>
+        <el-input type="number" size="10" placeholder="Please input Kill" v-model.number="kill"></el-input>
+        </el-col>
+      </el-row>
 
-      <button style="margin-left: 20px; margin-top: 10px;" type="button">
-        <font size="5" color="#333399" @click="onStart(feed, kill)">Start</font>
-      </button>
+      <el-button style="margin-left: 15px; margin-top: 15px;" @click="onStart(feed, kill)" type="primary">Start</el-button>
 
-      <button style="margin-left: 20px;" type="button">
-         <font size="5" color="#333399" @click="onStop">Stop</font>
-      </button>
+      <el-button style="margin-left: 15px; margin-top: 15px;" @click="onStop()" type="warning">Stop</el-button>
 
-      <button style="margin-left: 20px;" type="button">
-         <font size="5" color="#333399" @click="onInit">Init</font>
-      </button>
+      <el-button style="margin-left: 15px; margin-top: 15px;" @click="onInit()" type="danger">Init</el-button>
 
     </div> 
   </div>
@@ -33,6 +38,10 @@
 
 import { Component, Vue } from 'vue-property-decorator';
 import { GrayScotModelFactory } from "../lib/gray-scott-model/gray-scott-model"
+import 'element-ui/lib/theme-chalk/index.css';
+import ElementUI from 'element-ui';
+
+Vue.use(ElementUI);
 
 const SPACE_GRIDSIZE = 100
 const SQUARE_SIZE = 10
@@ -111,9 +120,6 @@ export default class GrayScotModelSimulator extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.canvas {
-  border: 1px solid #000;
-}
 
 #gray-scot-model-simulator-container {
   display: grid;
@@ -121,15 +127,16 @@ export default class GrayScotModelSimulator extends Vue {
   grid-template-columns: 500px 1fr;
 }
 
-#output{
+#gray_scot_model_canvas{
   grid-row: 1 / 3;
   grid-column: 1 / 2;
+  border: 1px solid #000;
 }
 
 #operation{
   grid-row: 1 / 3;
   grid-column: 2 / 4;
-  background: #8f8;
+  border: 1px solid #000;
   padding-left: 10px;
 }
 </style>
