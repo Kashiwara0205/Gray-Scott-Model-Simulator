@@ -1,30 +1,36 @@
 <template>
   <div id="gray-scot-model-simulator-container">
     <canvas id="gray_scot_model_canvas" width="500" height="500" class="canvas"></canvas>
-    
+
     <br>
 
     <div id="operation" style="padding-top: 5px;">
+      <el-row :gutter="20" style="padding-left: 15px; padding-top: 15px;">
+        <el-col :span="20">
+          <div style="padding-bottom: 5px"> <b> Default Set: </b> </div>
+          <el-select v-model="selectedType" filterable placeholder="Select">
+            <el-option 
+              v-for="item in defaultTypeList" :key="item.value" :label="item.label" :value="item.value">
+            </el-option>
+          </el-select>
+        </el-col>
+      </el-row>
 
       <el-row :gutter="20" style="padding-left: 15px; padding-top: 15px;">
-       <el-col :span="20">
-          <div style="padding-bottom: 5px">
-            <b> Feed Value: </b>
-          </div>
-        <el-input type="number" size="10" placeholder="Please input Feed" v-model.number="feed"></el-input>
+        <el-col :span="20">
+          <div style="padding-bottom: 5px"> <b> Feed Value: </b> </div>
+          <el-input type="number" size="10" placeholder="Please input Feed" v-model.number="feed"></el-input>
        </el-col>
       </el-row>
 
       <el-row :gutter="20" style="padding-left: 15px; padding-top: 15px;">
         <el-col :span="20">
-          <div style="padding-bottom: 5px">
-            <b> Kill Value: </b>
-          </div>
-        <el-input type="number" size="10" placeholder="Please input Kill" v-model.number="kill"></el-input>
+          <div style="padding-bottom: 5px"> <b> Kill Value: </b> </div>
+          <el-input type="number" size="10" placeholder="Please input Kill" v-model.number="kill"></el-input>
         </el-col>
       </el-row>
 
-      <el-button style="margin-left: 15px; margin-top: 15px;" @click="onStart(feed, kill)" type="primary">Start</el-button>
+      <el-button style="margin-left: 15px; margin-top: 15px;" @click="onStart()" type="primary">Start</el-button>
 
       <el-button style="margin-left: 15px; margin-top: 15px;" @click="onStop()" type="warning">Stop</el-button>
 
@@ -36,7 +42,7 @@
 
 <script lang="ts">
 
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue, Watch } from 'vue-property-decorator';
 import { GrayScotModelFactory } from "../lib/gray-scott-model/gray-scott-model"
 import 'element-ui/lib/theme-chalk/index.css';
 import ElementUI from 'element-ui';
@@ -57,15 +63,52 @@ export default class GrayScotModelSimulator extends Vue {
   private feed = 0.022
   private kill = 0.051
 
-  private mounted(){  
-    this.canvas = document.getElementById('gray_scot_model_canvas')
-    this.onInit()
+  private selectedType = "stripe"
+  private defaultTypeList = [
+    { value: "stripe", label: "stripe" },
+    { value: "spots", label: "spots" },
+    { value: "amorphous", label: "amorphous" },
+    { value: "bubbles", label: "bubbles" },
+    { value: "waves", label: "waves" }
+  ]
+
+  @Watch("selectedType")
+  onChangeType(type: string){
+    switch(type){
+      case "stripe":
+        this.$set(this, "feed", 0.022)
+        this.$set(this, "kill", 0.051)
+        break;
+      case "spots":
+        this.$set(this, "feed", 0.035)
+        this.$set(this, "kill", 0.065)
+        break;
+      case "amorphous":
+        this.$set(this, "feed", 0.04)
+        this.$set(this, "kill", 0.06)
+        break;
+      case "bubbles":
+        this.$set(this, "feed", 0.012)
+        this.$set(this, "kill", 0.05)
+        break;
+      case "waves":
+        this.$set(this, "feed", 0.025)
+        this.$set(this, "kill", 0.05)
+        break;
+    }
+
+    this.initDraw()
   }
 
-  private onStart(feed: number, kill: number){
+  private mounted(){  
+    this.canvas = document.getElementById('gray_scot_model_canvas')
+    this.initDraw()
+  }
+
+  private onStart(){
     clearInterval(this.interval);
-    this.grayScotModel = this.createGrayScotModel(feed, kill)
-    this.onDraw(this.grayScotModel.materialU)
+    this.grayScotModel = this.createGrayScotModel(this.feed, this.kill)
+    this.draw(this.grayScotModel.materialU)
     this.interval = setInterval(this.onUpdate, 0.001)
   }
 
@@ -75,18 +118,23 @@ export default class GrayScotModelSimulator extends Vue {
 
   private onUpdate(){
     for(let i = 0; i < VISUALIZATION_STEP; i++){ this.grayScotModel.update() }
-    this.onDraw(this.grayScotModel.materialU)
+    this.draw(this.grayScotModel.materialU)
   }
 
   private onInit(){
-    clearInterval(this.interval);
+    this.$set(this, "selectedType", "stripe")
     this.$set(this, "feed", 0.022)
     this.$set(this, "kill", 0.051)
-    this.grayScotModel = this.createGrayScotModel(0.022, 0.051)
-    this.onDraw(this.grayScotModel.materialU)
+    this.initDraw()
   }
 
-  private onDraw(materialU){
+  private initDraw(){
+    clearInterval(this.interval);
+    this.grayScotModel = this.createGrayScotModel(this.feed, this.kill)
+    this.draw(this.grayScotModel.materialU)
+  }
+
+  private draw(materialU){
     const ctx = this.canvas.getContext('2d')
     const cellWidth = Math.floor(CANVAS_WIDTH / SPACE_GRIDSIZE)
     const cellHeight = Math.floor(CANVAS_HEIGHT / SPACE_GRIDSIZE)
