@@ -30,6 +30,7 @@
 </template>
 
 <script lang="ts">
+
 import { Component, Vue } from 'vue-property-decorator';
 import { GrayScotModelFactory } from "../lib/gray-scott-model/gray-scott-model"
 
