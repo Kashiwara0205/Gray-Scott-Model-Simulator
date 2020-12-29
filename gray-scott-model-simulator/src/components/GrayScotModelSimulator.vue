@@ -30,11 +30,17 @@
         </el-col>
       </el-row>
 
-      <el-button style="margin-left: 15px; margin-top: 15px;" @click="onStart()" type="primary">Start</el-button>
+      <el-button style="margin-left: 15px; margin-top: 15px;" @click="onStart()" type="primary">
+        Start
+      </el-button>
 
-      <el-button style="margin-left: 15px; margin-top: 15px;" @click="onStop()" type="warning">Stop</el-button>
+      <el-button style="margin-left: 15px; margin-top: 15px;" @click="onStop()" type="warning">
+        Stop
+      </el-button>
 
-      <el-button style="margin-left: 15px; margin-top: 15px;" @click="onInit()" type="danger">Init</el-button>
+      <el-button style="margin-left: 15px; margin-top: 15px;" @click="onInit()" type="danger">
+        Clear
+      </el-button>
 
     </div> 
   </div>

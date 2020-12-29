@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Gray-Scot-Model Simple Simulator</h1>
+    <h1> <i class="el-icon-s-platform"></i>  Gray-Scot-Model Simple Simulator </h1>
     <GrayScotModelSimulator></GrayScotModelSimulator>
   </div>
 </template>
@@ -8,6 +8,10 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import GrayScotModelSimulator from './components/GrayScotModelSimulator.vue';
+import 'element-ui/lib/theme-chalk/index.css';
+import ElementUI from 'element-ui';
+
+Vue.use(ElementUI);
 
 @Component({
   components: {
