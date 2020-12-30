@@ -55,15 +55,22 @@
         </el-col>
       </el-row>
 
-      <el-button style="margin-left: 20px; margin-top: 25px;" @click="onStart()" type="primary">
+      <el-button v-if="state == 'stop'" style="margin-left: 20px; margin-top: 25px;" @click="onStart()" type="info">
+        <i class="el-icon-video-play"></i> 
         Start
       </el-button>
 
-      <el-button style="margin-left: 20px; margin-top: 25px;" @click="onStop()" type="warning">
+      <el-button v-if="state == 'start' || state == 'restart'" style="margin-left: 20px; margin-top: 25px;" @click="onStop()" type="info">
+        <i class="el-icon-video-pause"></i> 
         Stop
       </el-button>
 
-      <el-button style="margin-left: 20px; margin-top: 25px;" @click="onInit()" type="danger">
+      <el-button style="margin-left: 20px; margin-top: 25px;" @click="onRestart()" type="warning">
+       <i class="el-icon-refresh"></i> 
+       Restart
+      </el-button>
+
+      <el-button style="margin-left: 20px; margin-top: 25px;" @click="onClear()" type="danger">
         Clear
       </el-button>
     </div>
@@ -96,6 +103,7 @@ export default class GrayScotModelSimulator extends Vue {
   private kill = 0.051
   private hexColor = "#15B9C5"
   private hslColor = [184, 81, 43]
+  private state = "stop"
 
   private selectedType = "stripe"
   private defaultTypeList = [
@@ -154,14 +162,23 @@ export default class GrayScotModelSimulator extends Vue {
     this.initDraw()
   }
 
-  private onStart(){
-    clearInterval(this.interval);
+  private onRestart(){
+    this.state = "restart"
     this.grayScotModel = this.createGrayScotModel(this.feed, this.kill)
+    clearInterval(this.interval);
+    this.draw(this.grayScotModel.materialU)
+    this.interval = setInterval(this.onUpdate, INTERVAL_TIME)
+  }
+
+  private onStart(){
+    this.state = "start"
+    clearInterval(this.interval);
     this.draw(this.grayScotModel.materialU)
     this.interval = setInterval(this.onUpdate, INTERVAL_TIME)
   }
 
   private onStop(){
+    this.state = "stop"
     clearInterval(this.interval);
   }
 
@@ -170,7 +187,8 @@ export default class GrayScotModelSimulator extends Vue {
     this.draw(this.grayScotModel.materialU)
   }
 
-  private onInit(){
+  private onClear(){
+    this.$set(this, "state", "stop")
     this.$set(this, "selectedType", "stripe")
     this.$set(this, "feed", 0.022)
     this.$set(this, "kill", 0.051)
