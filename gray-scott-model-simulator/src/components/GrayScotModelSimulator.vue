@@ -55,19 +55,14 @@
         </el-col>
       </el-row>
 
-      <el-button v-if="state == 'stop'" style="margin-left: 20px; margin-top: 25px;" @click="onStart()" type="info">
+      <el-button style="margin-left: 20px; margin-top: 25px;" @click="onStart()" type="primary">
         <i class="el-icon-video-play"></i> 
         Start
       </el-button>
 
-      <el-button v-if="state == 'start' || state == 'restart'" style="margin-left: 20px; margin-top: 25px;" @click="onStop()" type="info">
+      <el-button style="margin-left: 20px; margin-top: 25px;" @click="onStop()" type="warning">
         <i class="el-icon-video-pause"></i> 
         Stop
-      </el-button>
-
-      <el-button style="margin-left: 20px; margin-top: 25px;" @click="onRestart()" type="warning">
-       <i class="el-icon-refresh"></i> 
-       Restart
       </el-button>
 
       <el-button style="margin-left: 20px; margin-top: 25px;" @click="onClear()" type="danger">
@@ -103,7 +98,6 @@ export default class GrayScotModelSimulator extends Vue {
   private kill = 0.051
   private hexColor = "#15B9C5"
   private hslColor = [184, 81, 43]
-  private state = "stop"
 
   private selectedType = "stripe"
   private defaultTypeList = [
@@ -148,11 +142,14 @@ export default class GrayScotModelSimulator extends Vue {
         this.$set(this, "kill", 0.062)
         break;
     }
+
+    this.initDraw()
   }
 
   @Watch("hexColor")
   onChangeColor(hexColor){
     this.$set(this, "hslColor", ColorConvert.hex.hsl(hexColor.slice(1)))
+    this.initDraw()
   }
 
   private mounted(){  
@@ -160,23 +157,14 @@ export default class GrayScotModelSimulator extends Vue {
     this.initDraw()
   }
 
-  private onRestart(){
-    this.state = "restart"
+  private onStart(){
     this.grayScotModel = this.createGrayScotModel(this.feed, this.kill)
     clearInterval(this.interval);
     this.draw(this.grayScotModel.materialU)
     this.interval = setInterval(this.onUpdate, INTERVAL_TIME)
   }
 
-  private onStart(){
-    this.state = "start"
-    clearInterval(this.interval);
-    this.draw(this.grayScotModel.materialU)
-    this.interval = setInterval(this.onUpdate, INTERVAL_TIME)
-  }
-
   private onStop(){
-    this.state = "stop"
     clearInterval(this.interval);
   }
 
