@@ -6,9 +6,9 @@
 
     <div id="setting">
       <h2 style="padding-left: 15px;"> <i class="el-icon-setting"></i>  Setting </h2>
-      <el-row :gutter="20" style="padding-left: 15px; padding-top: 15px;">
+      <el-row :gutter="20" style="padding-left: 15px; padding-top: 5px;">
         <el-col :span="10">
-          <div style="padding-bottom: 5px"> <b> Default Set </b> </div>
+          <div style="padding-bottom: 5px"> <b> Preset </b> </div>
           <el-select v-model="selectedType" filterable placeholder="Select">
             <el-option 
               v-for="item in defaultTypeList" :key="item.value" :label="item.label" :value="item.value">
@@ -23,14 +23,14 @@
 
       <el-row :gutter="20" style="padding-left: 15px; padding-top: 15px;">
         <el-col :span="20">
-          <div style="padding-bottom: 5px"> <b> Feed Value </b> </div>
+          <div style="padding-bottom: 5px"> <b> Feed rate </b> </div>
           <el-input type="number" size="10" placeholder="Please input Feed" v-model.number="feed"></el-input>
        </el-col>
       </el-row>
 
       <el-row :gutter="20" style="padding-left: 15px; padding-top: 15px;">
         <el-col :span="20">
-          <div style="padding-bottom: 5px"> <b> Kill Value </b> </div>
+          <div style="padding-bottom: 5px"> <b> Kill rate </b> </div>
           <el-input type="number" size="10" placeholder="Please input Kill" v-model.number="kill"></el-input>
         </el-col>
       </el-row>
@@ -82,9 +82,11 @@ export default class GrayScotModelSimulator extends Vue {
   private defaultTypeList = [
     { value: "stripe", label: "stripe" },
     { value: "spots", label: "spots" },
+    { value: "moving_spots", label: "moving_spots" },
     { value: "amorphous", label: "amorphous" },
     { value: "bubbles", label: "bubbles" },
-    { value: "waves", label: "waves" }
+    { value: "waves", label: "waves" },
+    { value: "slotions", label: "slotions" }
   ]
 
   @Watch("selectedType")
@@ -98,6 +100,10 @@ export default class GrayScotModelSimulator extends Vue {
         this.$set(this, "feed", 0.035)
         this.$set(this, "kill", 0.065)
         break;
+      case "moving_spots":
+        this.$set(this, "feed", 0.014)
+        this.$set(this, "kill", 0.054)
+        break;
       case "amorphous":
         this.$set(this, "feed", 0.04)
         this.$set(this, "kill", 0.06)
@@ -109,6 +115,10 @@ export default class GrayScotModelSimulator extends Vue {
       case "waves":
         this.$set(this, "feed", 0.025)
         this.$set(this, "kill", 0.05)
+        break;
+      case "slotions":
+        this.$set(this, "feed", 0.03)
+        this.$set(this, "kill", 0.062)
         break;
     }
 
