@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1> <i class="el-icon-s-platform"></i>  Gray-Scot-Model Simple Simulator </h1>
+    <h1> Gray-Scot-Model Simple Simulator </h1>
     <GrayScotModelSimulator></GrayScotModelSimulator>
   </div>
 </template>

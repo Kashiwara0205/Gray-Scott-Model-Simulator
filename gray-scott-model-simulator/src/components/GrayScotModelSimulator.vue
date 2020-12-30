@@ -4,7 +4,8 @@
 
     <br>
 
-    <div id="operation" style="padding-top: 5px;">
+    <div id="setting">
+      <h2 style="padding-left: 15px;"> <i class="el-icon-setting"></i>  Setting </h2>
       <el-row :gutter="20" style="padding-left: 15px; padding-top: 15px;">
         <el-col :span="10">
           <div style="padding-bottom: 5px"> <b> Default Set </b> </div>
@@ -55,10 +56,11 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { GrayScotModelFactory } from "../lib/gray-scott-model/gray-scott-model"
 import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/lib/locale/lang/en'
 import ElementUI from 'element-ui';
 import ColorConvert from "color-convert"
 
-Vue.use(ElementUI);
+Vue.use(ElementUI, { locale });
 
 const SPACE_GRIDSIZE = 100
 const SQUARE_SIZE = 15
@@ -116,6 +118,7 @@ export default class GrayScotModelSimulator extends Vue {
   @Watch("hexColor")
   onChangeColor(hexColor){
     this.$set(this, "hslColor", ColorConvert.hex.hsl(hexColor.slice(1)))
+    this.initDraw()
   }
 
   private mounted(){  
@@ -203,7 +206,7 @@ export default class GrayScotModelSimulator extends Vue {
   border: 1px solid #000;
 }
 
-#operation{
+#setting{
   grid-row: 1 / 3;
   grid-column: 2 / 4;
   border: 1px solid #000;
