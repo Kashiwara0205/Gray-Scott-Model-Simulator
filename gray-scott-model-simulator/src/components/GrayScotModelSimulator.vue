@@ -148,8 +148,6 @@ export default class GrayScotModelSimulator extends Vue {
         this.$set(this, "kill", 0.062)
         break;
     }
-
-    this.initDraw()
   }
 
   @Watch("hexColor")
