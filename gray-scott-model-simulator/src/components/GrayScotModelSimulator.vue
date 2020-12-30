@@ -1,6 +1,6 @@
 <template>
   <div id="gray-scot-model-simulator-container">
-    <canvas id="gray_scot_model_canvas" width="500" height="500" class="canvas"></canvas>
+    <canvas id="gray_scot_model_canvas" width="800" height="600" class="canvas"></canvas>
 
     <br>
 
@@ -63,10 +63,9 @@ import ColorConvert from "color-convert"
 Vue.use(ElementUI, { locale });
 
 const SPACE_GRIDSIZE = 100
-const SQUARE_SIZE = 15
-const VISUALIZATION_STEP = 15
-const CANVAS_WIDTH = 500
-const CANVAS_HEIGHT = 500
+const SQUARE_SIZE = 12
+const VISUALIZATION_STEP = 20
+const INTERVAL_TIME = 0.001
 
 @Component
 export default class GrayScotModelSimulator extends Vue {
@@ -140,7 +139,7 @@ export default class GrayScotModelSimulator extends Vue {
     clearInterval(this.interval);
     this.grayScotModel = this.createGrayScotModel(this.feed, this.kill)
     this.draw(this.grayScotModel.materialU)
-    this.interval = setInterval(this.onUpdate, 0.001)
+    this.interval = setInterval(this.onUpdate, INTERVAL_TIME)
   }
 
   private onStop(){
@@ -170,8 +169,8 @@ export default class GrayScotModelSimulator extends Vue {
 
   private draw(materialU){
     const ctx = this.canvas.getContext('2d')
-    const cellWidth = Math.floor(CANVAS_WIDTH / SPACE_GRIDSIZE)
-    const cellHeight = Math.floor(CANVAS_HEIGHT / SPACE_GRIDSIZE)
+    const cellWidth = Math.floor(this.canvas.width / SPACE_GRIDSIZE)
+    const cellHeight = Math.floor(this.canvas.height / SPACE_GRIDSIZE)
     const hslColor = this.hslColor
 
     for(let i = 0; i < SPACE_GRIDSIZE; i++){
@@ -206,14 +205,15 @@ export default class GrayScotModelSimulator extends Vue {
 
 #gray-scot-model-simulator-container {
   display: grid;
-  grid-template-rows: 500px fr;
-  grid-template-columns: 500px 300px;
+  grid-template-rows: 550px fr;
+  grid-template-columns: 790px 300px;
 }
 
 #gray_scot_model_canvas{
   grid-row: 1 / 3;
   grid-column: 1 / 2;
   border: 1px solid #000;
+  background-color: #000;
 }
 
 #setting{
