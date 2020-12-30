@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1> Gray-Scot-Model Simple Simulator </h1>
+    <h2> Gray-Scot-Model Simulator made by Vue + Ts</h2>
     <GrayScotModelSimulator></GrayScotModelSimulator>
   </div>
 </template>

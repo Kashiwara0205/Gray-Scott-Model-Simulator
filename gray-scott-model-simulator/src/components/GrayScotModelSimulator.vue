@@ -4,9 +4,26 @@
 
     <br>
 
+    <div id="introductions">
+      <div>
+          <h2 style="margin-left: 5px; padding-left: 15px;"> <i class="el-icon-warning-outline"></i>  Instructions </h2>
+          <div style="margin-left: 20px; margin-botoom: 20px; padding-top: 10px; padding-bottom: 10px; background-color: #c0c0c0;">
+          <b style="padding-left: 15px; "> 1. select preset or input feed rate and kill rate </b> 
+          
+          <div style="margin-top: 10px;">
+            <b style="padding-left: 15px;">2. select your favorite color</b>
+          </div>
+          <div style="margin-top: 10px;">
+           <b style="padding-left: 15px;">3. at last, push start button</b>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div id="setting">
-      <h2 style="padding-left: 15px;"> <i class="el-icon-setting"></i>  Setting </h2>
-      <el-row :gutter="20" style="padding-left: 15px; padding-top: 5px;">
+
+      <h2 style="padding-left: 20px;"> <i class="el-icon-setting"></i>  Setting </h2>
+      <el-row :gutter="20" style="padding-left: 20px; padding-top: 5px;">
         <el-col :span="10">
           <div style="padding-bottom: 5px"> <b> Preset </b> </div>
           <el-select v-model="selectedType" filterable placeholder="Select">
@@ -21,33 +38,36 @@
         </el-col>
       </el-row>
 
-      <el-row :gutter="20" style="padding-left: 15px; padding-top: 15px;">
+      <el-row :gutter="20" style="padding-left: 20px; padding-top: 15px;">
         <el-col :span="20">
           <div style="padding-bottom: 5px"> <b> Feed rate </b> </div>
-          <el-input type="number" size="10" placeholder="Please input Feed" v-model.number="feed"></el-input>
+          <el-input size="10" placeholder="Please input Feed" v-model.number="feed"></el-input>
        </el-col>
       </el-row>
 
-      <el-row :gutter="20" style="padding-left: 15px; padding-top: 15px;">
+      <el-row :gutter="20" style="padding-left: 20px; padding-top: 15px;">
+      </el-row>
+
+      <el-row :gutter="20" style="padding-left: 20px; padding-top: 15px;">
         <el-col :span="20">
           <div style="padding-bottom: 5px"> <b> Kill rate </b> </div>
-          <el-input type="number" size="10" placeholder="Please input Kill" v-model.number="kill"></el-input>
+          <el-input size="10" placeholder="Please input Kill" v-model.number="kill"></el-input>
         </el-col>
       </el-row>
 
-      <el-button style="margin-left: 15px; margin-top: 15px;" @click="onStart()" type="primary">
+      <el-button style="margin-left: 20px; margin-top: 25px;" @click="onStart()" type="primary">
         Start
       </el-button>
 
-      <el-button style="margin-left: 15px; margin-top: 15px;" @click="onStop()" type="warning">
+      <el-button style="margin-left: 20px; margin-top: 25px;" @click="onStop()" type="warning">
         Stop
       </el-button>
 
-      <el-button style="margin-left: 15px; margin-top: 15px;" @click="onInit()" type="danger">
+      <el-button style="margin-left: 20px; margin-top: 25px;" @click="onInit()" type="danger">
         Clear
       </el-button>
+    </div>
 
-    </div> 
   </div>
 </template>
 
@@ -127,7 +147,6 @@ export default class GrayScotModelSimulator extends Vue {
   @Watch("hexColor")
   onChangeColor(hexColor){
     this.$set(this, "hslColor", ColorConvert.hex.hsl(hexColor.slice(1)))
-    this.initDraw()
   }
 
   private mounted(){  
@@ -205,21 +224,30 @@ export default class GrayScotModelSimulator extends Vue {
 
 #gray-scot-model-simulator-container {
   display: grid;
-  grid-template-rows: 550px fr;
-  grid-template-columns: 790px 300px;
+  grid-template-rows: 550px 300px fr;
+  grid-template-columns: 790px 350px;
 }
 
 #gray_scot_model_canvas{
-  grid-row: 1 / 3;
+  grid-row: 1 / 5;
   grid-column: 1 / 2;
   border: 1px solid #000;
   background-color: #000;
 }
 
-#setting{
-  grid-row: 1 / 3;
+#introductions{
+  grid-row: 1 / 2;
   grid-column: 2 / 4;
-  border: 1px solid #000;
+  border-top: 1px solid #000;
+  border-right: 1px solid #000;
+  padding-left: 10px;
+}
+
+#setting{
+  grid-row: 2 / 5;
+  grid-column: 2 / 4;
+  border-right: 1px solid #000;
+  border-bottom: 1px solid #000;
   padding-left: 10px;
 }
 </style>
