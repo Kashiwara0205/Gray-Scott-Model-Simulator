@@ -77,6 +77,7 @@
 
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { GrayScotModelFactory } from "../lib/gray-scott-model/gray-scott-model"
+import GrayScotModel from "../interface/gray_soct_model"
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en'
 import ElementUI from 'element-ui';
@@ -93,9 +94,10 @@ const INTERVAL_TIME = 0.001
 
 @Component
 export default class GrayScotModelSimulator extends Vue {
-  private canvas: any
-  private grayScotModel: any
-  private interval: any
+  private canvas!: HTMLCanvasElement
+  private grayScotModel!: GrayScotModel
+
+  private interval = 0
 
   private hexColor = INITIAL_COLOR.HEX_COLOR
   private hslColor = INITIAL_COLOR.HSL_COLOR
@@ -162,7 +164,7 @@ export default class GrayScotModelSimulator extends Vue {
   }
 
   private mounted(){  
-    this.canvas = document.getElementById('gray_scot_model_canvas')
+    this.canvas = document.getElementById('gray_scot_model_canvas') as HTMLCanvasElement
     this.initDraw()
   }
 
@@ -200,6 +202,8 @@ export default class GrayScotModelSimulator extends Vue {
 
   private draw(materialU: number[][]){
     const ctx = this.canvas.getContext('2d')
+    if(ctx === null){ return }
+    
     const cellWidth = Math.floor(this.canvas.width / SPACE_GRIDSIZE)
     const cellHeight = Math.floor(this.canvas.height / SPACE_GRIDSIZE)
     const hslColor = this.hslColor
