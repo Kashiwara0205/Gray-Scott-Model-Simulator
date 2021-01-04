@@ -81,6 +81,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en'
 import ElementUI from 'element-ui';
 import ColorConvert from "color-convert"
+import * as PATTERN_TYPE from "../const/pattern_type"
 
 Vue.use(ElementUI, { locale });
 
@@ -94,52 +95,54 @@ export default class GrayScotModelSimulator extends Vue {
   private canvas
   private grayScotModel
   private interval
-  private feed = 0.022
-  private kill = 0.051
+
   private hexColor = "#15B9C5"
   private hslColor = [184, 81, 43]
 
-  private selectedType = "stripe"
+  private selectedType = PATTERN_TYPE.STRIPE.NAME
+  private feed = PATTERN_TYPE.STRIPE.FEED
+  private kill = PATTERN_TYPE.STRIPE.KILL
+
   private defaultTypeList = [
-    { value: "stripe", label: "stripe" },
-    { value: "spots", label: "spots" },
-    { value: "moving_spots", label: "moving_spots" },
-    { value: "amorphous", label: "amorphous" },
-    { value: "bubbles", label: "bubbles" },
-    { value: "waves", label: "waves" },
-    { value: "slotions", label: "slotions" }
+    { value: PATTERN_TYPE.STRIPE.NAME, label: PATTERN_TYPE.STRIPE.NAME },
+    { value: PATTERN_TYPE.SPOTS.NAME, label: PATTERN_TYPE.SPOTS.NAME },
+    { value: PATTERN_TYPE.MOVING_SPOTS.NAME, label: PATTERN_TYPE.MOVING_SPOTS.NAME },
+    { value: PATTERN_TYPE.AMORPHOUS.NAME, label: PATTERN_TYPE.AMORPHOUS.NAME },
+    { value: PATTERN_TYPE.BUBBLES.NAME, label: PATTERN_TYPE.BUBBLES.NAME },
+    { value: PATTERN_TYPE.WAVES.NAME, label: PATTERN_TYPE.WAVES.NAME },
+    { value: PATTERN_TYPE.SOLITIONS.NAME, label: PATTERN_TYPE.SOLITIONS.NAME }
   ]
 
   @Watch("selectedType")
-  onChangeType(type: string){
-    switch(type){
-      case "stripe":
-        this.$set(this, "feed", 0.022)
-        this.$set(this, "kill", 0.051)
+  onChangeType(patternType: string){
+    switch(patternType){
+      case PATTERN_TYPE.STRIPE.NAME:
+        this.$set(this, "feed", PATTERN_TYPE.STRIPE.FEED)
+        this.$set(this, "kill", PATTERN_TYPE.STRIPE.KILL)
         break;
-      case "spots":
-        this.$set(this, "feed", 0.035)
-        this.$set(this, "kill", 0.065)
+      case PATTERN_TYPE.SPOTS.NAME:
+        this.$set(this, "feed", PATTERN_TYPE.SPOTS.FEED)
+        this.$set(this, "kill", PATTERN_TYPE.SPOTS.KILL)
         break;
-      case "moving_spots":
-        this.$set(this, "feed", 0.014)
-        this.$set(this, "kill", 0.054)
+      case PATTERN_TYPE.MOVING_SPOTS.NAME:
+        this.$set(this, "feed", PATTERN_TYPE.MOVING_SPOTS.FEED)
+        this.$set(this, "kill", PATTERN_TYPE.MOVING_SPOTS.KILL)
         break;
-      case "amorphous":
-        this.$set(this, "feed", 0.04)
-        this.$set(this, "kill", 0.06)
+      case PATTERN_TYPE.AMORPHOUS.NAME:
+        this.$set(this, "feed", PATTERN_TYPE.AMORPHOUS.FEED)
+        this.$set(this, "kill", PATTERN_TYPE.AMORPHOUS.KILL)
         break;
-      case "bubbles":
-        this.$set(this, "feed", 0.012)
-        this.$set(this, "kill", 0.05)
+      case PATTERN_TYPE.BUBBLES.NAME:
+        this.$set(this, "feed", PATTERN_TYPE.BUBBLES.FEED)
+        this.$set(this, "kill", PATTERN_TYPE.BUBBLES.KILL)
         break;
-      case "waves":
-        this.$set(this, "feed", 0.025)
-        this.$set(this, "kill", 0.05)
+      case PATTERN_TYPE.WAVES.NAME:
+        this.$set(this, "feed", PATTERN_TYPE.WAVES.FEED)
+        this.$set(this, "kill", PATTERN_TYPE.WAVES.KILL)
         break;
-      case "slotions":
-        this.$set(this, "feed", 0.03)
-        this.$set(this, "kill", 0.062)
+      case PATTERN_TYPE.SOLITIONS.NAME:
+        this.$set(this, "feed", PATTERN_TYPE.SOLITIONS.FEED)
+        this.$set(this, "kill", PATTERN_TYPE.SOLITIONS.KILL)
         break;
     }
 
@@ -174,10 +177,9 @@ export default class GrayScotModelSimulator extends Vue {
   }
 
   private onClear(){
-    this.$set(this, "state", "stop")
-    this.$set(this, "selectedType", "stripe")
-    this.$set(this, "feed", 0.022)
-    this.$set(this, "kill", 0.051)
+    this.$set(this, "selectedType", PATTERN_TYPE.STRIPE.NAME)
+    this.$set(this, "feed", PATTERN_TYPE.STRIPE.FEED)
+    this.$set(this, "kill", PATTERN_TYPE.STRIPE.KILL)
     this.$set(this, "hexColor", "#15D6E4")
     this.$set(this, "hslColor", [184, 81, 43])
 
@@ -223,7 +225,6 @@ export default class GrayScotModelSimulator extends Vue {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 
 #gray-scot-model-simulator-container {
