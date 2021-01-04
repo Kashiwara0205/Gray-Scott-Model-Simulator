@@ -21,7 +21,7 @@
             <b class="introduction-text">3. at last, push start button</b>
           </div>
         </div>
-        
+
       </div>
     </div>
 
@@ -78,7 +78,7 @@
 
 import { Component, Vue, Watch } from 'vue-property-decorator';
 import { GrayScotModelFactory } from "../lib/gray-scott-model/gray-scott-model"
-import GrayScotModel from "../interface/gray_soct_model"
+import GrayScotModel from "../interface/gray-soct-model"
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/en'
 import ElementUI from 'element-ui';
@@ -166,6 +166,7 @@ export default class GrayScotModelSimulator extends Vue {
 
   private mounted(){  
     this.canvas = document.getElementById('gray_scot_model_canvas') as HTMLCanvasElement
+
     this.initDraw()
   }
 
@@ -203,7 +204,7 @@ export default class GrayScotModelSimulator extends Vue {
 
   private draw(materialU: number[][]){
     const ctx = this.canvas.getContext('2d')
-    if(ctx === null){ return }
+    if(null === ctx){ return }
     
     const cellWidth = Math.floor(this.canvas.width / SPACE_GRIDSIZE)
     const cellHeight = Math.floor(this.canvas.height / SPACE_GRIDSIZE)

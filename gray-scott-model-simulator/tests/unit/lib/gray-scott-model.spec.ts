@@ -1,4 +1,4 @@
-import { GrayScotModelFactory } from "../../src/lib/gray-scott-model/gray-scott-model"
+import { GrayScotModelFactory } from "../../../src/lib/gray-scott-model/gray-scott-model"
 
 describe('GrayScotModel', () => {
 
