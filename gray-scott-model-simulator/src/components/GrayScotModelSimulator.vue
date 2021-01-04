@@ -166,7 +166,6 @@ export default class GrayScotModelSimulator extends Vue {
 
   private mounted(){  
     this.canvas = document.getElementById('gray_scot_model_canvas') as HTMLCanvasElement
-
     this.initDraw()
   }
 
