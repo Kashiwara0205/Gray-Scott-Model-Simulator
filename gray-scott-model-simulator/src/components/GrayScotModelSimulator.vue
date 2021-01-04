@@ -1,31 +1,37 @@
 <template>
   <div id="gray-scot-model-simulator-container">
+
     <canvas id="gray_scot_model_canvas" width="800" height="600" class="canvas"></canvas>
 
     <br>
 
     <div id="introductions">
       <div>
-          <h2 style="margin-left: 5px; padding-left: 15px;"> <i class="el-icon-warning-outline"></i>  Instructions </h2>
-          <div style="margin-left: 20px; margin-botoom: 20px; padding-top: 10px; padding-bottom: 10px; background-color: #c0c0c0;">
-          <b style="padding-left: 15px; "> 1. select preset or input feed rate and kill rate </b> 
-          
-          <div style="margin-top: 10px;">
-            <b style="padding-left: 15px;">2. select your favorite color</b>
+
+        <h2 class="title"> <i class="el-icon-warning-outline"></i> Instructions </h2>
+
+        <div id="introduction-text-area">
+          <b class="introduction-text"> 1. select preset or input feed rate and kill rate </b> 
+      
+          <div class="introduction-text-top-space">
+            <b class="introduction-text">2. select your favorite color</b>
           </div>
-          <div style="margin-top: 10px;">
-           <b style="padding-left: 15px;">3. at last, push start button</b>
+
+          <div class="introduction-text-top-space">
+            <b class="introduction-text">3. at last, push start button</b>
           </div>
         </div>
+        
       </div>
     </div>
 
     <div id="setting">
 
-      <h2 style="padding-left: 20px;"> <i class="el-icon-setting"></i>  Setting </h2>
-      <el-row :gutter="20" style="padding-left: 20px; padding-top: 5px;">
+      <h2 class="title"> <i class="el-icon-setting"></i> Setting </h2>
+
+      <el-row :gutter="20" class="first-setting-area">
         <el-col :span="10">
-          <div style="padding-bottom: 5px"> <b> Preset </b> </div>
+          <div class="setting-label"> <b> Preset </b> </div>
           <el-select v-model="selectedType" filterable placeholder="Select">
             <el-option 
               v-for="item in defaultTypeList" :key="item.value" :label="item.label" :value="item.value">
@@ -33,39 +39,34 @@
           </el-select>
         </el-col>
         <el-col :span="10">
-          <div style="padding-bottom: 5px"> <b> Color </b> </div>
+          <div class="setting-label"> <b> Color </b> </div>
           <el-color-picker v-model="hexColor"></el-color-picker>
         </el-col>
       </el-row>
 
-      <el-row :gutter="20" style="padding-left: 20px; padding-top: 15px;">
+      <el-row :gutter="20" class="setting-area">
         <el-col :span="20">
-          <div style="padding-bottom: 5px"> <b> Feed rate </b> </div>
+          <div class="setting-label"> <b> Feed rate </b> </div>
           <el-input size="10" placeholder="Please input Feed" v-model.number="feed"></el-input>
        </el-col>
       </el-row>
 
-      <el-row :gutter="20" style="padding-left: 20px; padding-top: 15px;">
-      </el-row>
-
-      <el-row :gutter="20" style="padding-left: 20px; padding-top: 15px;">
+      <el-row :gutter="20" class="setting-area">
         <el-col :span="20">
-          <div style="padding-bottom: 5px"> <b> Kill rate </b> </div>
+          <div class="setting-label"> <b> Kill rate </b> </div>
           <el-input size="10" placeholder="Please input Kill" v-model.number="kill"></el-input>
         </el-col>
       </el-row>
 
-      <el-button style="margin-left: 20px; margin-top: 25px;" @click="onStart()" type="primary">
-        <i class="el-icon-video-play"></i> 
-        Start
+      <el-button class="setting-button" @click="onStart()" type="primary">
+        <i class="el-icon-video-play"></i> Start
       </el-button>
 
-      <el-button style="margin-left: 20px; margin-top: 25px;" @click="onStop()" type="warning">
-        <i class="el-icon-video-pause"></i> 
-        Stop
+      <el-button class="setting-button" @click="onStop()" type="warning">
+        <i class="el-icon-video-pause"></i> Stop
       </el-button>
 
-      <el-button style="margin-left: 20px; margin-top: 25px;" @click="onClear()" type="danger">
+      <el-button class="setting-button" @click="onClear()" type="danger">
         Clear
       </el-button>
     </div>
@@ -264,5 +265,43 @@ export default class GrayScotModelSimulator extends Vue {
   border-right: 1px solid #000;
   border-bottom: 1px solid #000;
   padding-left: 10px;
+}
+
+.introduction-text-top-space{
+  margin-top: 10px;
+}
+
+.introduction-text{
+  padding-left: 15px;
+}
+
+#introduction-text-area{
+  margin-left: 20px; 
+  padding-top: 10px; 
+  padding-bottom: 10px; 
+  background-color: #c0c0c0;
+}
+
+.title{
+  padding-left: 20px;
+}
+
+.first-setting-area{
+  padding-left: 20px; 
+  padding-top: 5px;
+}
+
+.setting-area{
+  padding-left: 20px; 
+  padding-top: 15px;
+}
+
+.setting-label{
+  padding-bottom: 5px;
+}
+
+.setting-button{
+  margin-left: 20px; 
+  margin-top: 25px;
 }
 </style>
