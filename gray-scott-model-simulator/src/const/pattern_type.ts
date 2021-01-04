@@ -39,3 +39,9 @@ export const SOLITIONS = {
   FEED: 0.03,
   KILL: 0.062
 }
+
+export const WORM = {
+  NAME: "worm",
+  FEED: 0.03,
+  KILL: 0.059
+}

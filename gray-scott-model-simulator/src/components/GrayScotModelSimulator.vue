@@ -82,6 +82,7 @@ import locale from 'element-ui/lib/locale/lang/en'
 import ElementUI from 'element-ui';
 import ColorConvert from "color-convert"
 import * as PATTERN_TYPE from "../const/pattern_type"
+import * as INITIAL_COLOR from "../const/initial_color"
 
 Vue.use(ElementUI, { locale });
 
@@ -96,8 +97,8 @@ export default class GrayScotModelSimulator extends Vue {
   private grayScotModel
   private interval
 
-  private hexColor = "#15B9C5"
-  private hslColor = [184, 81, 43]
+  private hexColor = INITIAL_COLOR.HEX_COLOR
+  private hslColor = INITIAL_COLOR.HSL_COLOR
 
   private selectedType = PATTERN_TYPE.STRIPE.NAME
   private feed = PATTERN_TYPE.STRIPE.FEED
@@ -110,7 +111,8 @@ export default class GrayScotModelSimulator extends Vue {
     { value: PATTERN_TYPE.AMORPHOUS.NAME, label: PATTERN_TYPE.AMORPHOUS.NAME },
     { value: PATTERN_TYPE.BUBBLES.NAME, label: PATTERN_TYPE.BUBBLES.NAME },
     { value: PATTERN_TYPE.WAVES.NAME, label: PATTERN_TYPE.WAVES.NAME },
-    { value: PATTERN_TYPE.SOLITIONS.NAME, label: PATTERN_TYPE.SOLITIONS.NAME }
+    { value: PATTERN_TYPE.SOLITIONS.NAME, label: PATTERN_TYPE.SOLITIONS.NAME },
+    { value: PATTERN_TYPE.WORM.NAME, label: PATTERN_TYPE.WORM.NAME }
   ]
 
   @Watch("selectedType")
@@ -143,6 +145,10 @@ export default class GrayScotModelSimulator extends Vue {
       case PATTERN_TYPE.SOLITIONS.NAME:
         this.$set(this, "feed", PATTERN_TYPE.SOLITIONS.FEED)
         this.$set(this, "kill", PATTERN_TYPE.SOLITIONS.KILL)
+        break;
+      case PATTERN_TYPE.WORM.NAME:
+        this.$set(this, "feed", PATTERN_TYPE.WORM.FEED)
+        this.$set(this, "kill", PATTERN_TYPE.WORM.KILL)
         break;
     }
 
@@ -180,8 +186,8 @@ export default class GrayScotModelSimulator extends Vue {
     this.$set(this, "selectedType", PATTERN_TYPE.STRIPE.NAME)
     this.$set(this, "feed", PATTERN_TYPE.STRIPE.FEED)
     this.$set(this, "kill", PATTERN_TYPE.STRIPE.KILL)
-    this.$set(this, "hexColor", "#15D6E4")
-    this.$set(this, "hslColor", [184, 81, 43])
+    this.$set(this, "hexColor", INITIAL_COLOR.HEX_COLOR)
+    this.$set(this, "hslColor", INITIAL_COLOR.HSL_COLOR)
 
     this.initDraw()
   }
