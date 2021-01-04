@@ -93,9 +93,9 @@ const INTERVAL_TIME = 0.001
 
 @Component
 export default class GrayScotModelSimulator extends Vue {
-  private canvas
-  private grayScotModel
-  private interval
+  private canvas: any
+  private grayScotModel: any
+  private interval: any
 
   private hexColor = INITIAL_COLOR.HEX_COLOR
   private hslColor = INITIAL_COLOR.HSL_COLOR
@@ -156,7 +156,7 @@ export default class GrayScotModelSimulator extends Vue {
   }
 
   @Watch("hexColor")
-  onChangeColor(hexColor){
+  onChangeColor(hexColor: string){
     this.$set(this, "hslColor", ColorConvert.hex.hsl(hexColor.slice(1)))
     this.initDraw()
   }
@@ -198,7 +198,7 @@ export default class GrayScotModelSimulator extends Vue {
     this.draw(this.grayScotModel.materialU)
   }
 
-  private draw(materialU){
+  private draw(materialU: number[][]){
     const ctx = this.canvas.getContext('2d')
     const cellWidth = Math.floor(this.canvas.width / SPACE_GRIDSIZE)
     const cellHeight = Math.floor(this.canvas.height / SPACE_GRIDSIZE)
