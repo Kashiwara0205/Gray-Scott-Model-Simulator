@@ -1,7 +1,7 @@
 <template>
   <div id="gray-scot-model-simulator-container">
 
-    <canvas id="gray_scot_model_canvas" width="800" height="600" class="canvas"></canvas>
+    <canvas id="gray-scot-model-canvas" width="800" height="600" class="canvas"></canvas>
 
     <br>
 
@@ -165,7 +165,7 @@ export default class GrayScotModelSimulator extends Vue {
   }
 
   private mounted(){  
-    this.canvas = document.getElementById('gray_scot_model_canvas') as HTMLCanvasElement
+    this.canvas = document.getElementById('gray-scot-model-canvas') as HTMLCanvasElement
     this.initDraw()
   }
 
@@ -244,7 +244,7 @@ export default class GrayScotModelSimulator extends Vue {
   grid-template-columns: 790px 350px;
 }
 
-#gray_scot_model_canvas{
+#gray-scot-model-canvas{
   grid-row: 1 / 5;
   grid-column: 1 / 2;
   border: 1px solid #000;
