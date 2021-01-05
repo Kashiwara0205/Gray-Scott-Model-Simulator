@@ -2,11 +2,7 @@ import { GrayScotModelFactory } from "../../../src/lib/gray-scott-model/gray-sco
 
 describe('GrayScotModel', () => {
 
-  // outline: should create new gray-scot-model object
-  // expected value: 
-  //   - materialU array size is 100, 100
-  //   - materialV array size is 100, 100
-  //   - check each initValue
+  // outline: check attributes when create gray-scot-model object
   it('should create new gray-scot-model object', () => {
     const mockMath = Object.create(Math);
     mockMath.random = () => 0.5;
@@ -34,11 +30,7 @@ describe('GrayScotModel', () => {
     expect(gray_scot_model.materialV[45][45]).toBe(0.3);
   })
 
-  // outline: should update gray-scot-model object
-  // expected value: 
-  //   - materialU array size is 100, 100
-  //   - materialV array size is 100, 100
-  //   - check each updateValue
+  // outline: check attributes when update gray-scot-model object
   it('should update gray-scot-model object', () => {
     const mockMath = Object.create(Math);
     mockMath.random = () => 0.5;

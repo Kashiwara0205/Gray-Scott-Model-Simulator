@@ -3,6 +3,7 @@ class ContextMock{
 
   fillRect(x, y, cellWidth, cellHeight){ }
 }
+
 HTMLCanvasElement.prototype.getContext = () => { 
   return new ContextMock
 };

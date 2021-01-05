@@ -1,12 +1,14 @@
 import { mount } from '@vue/test-utils'
 import GrayScotModelSimulator from '../../../src/components/GrayScotModelSimulator.vue';
-import { GrayScotModelFactory } from "../../../src/lib/gray-scott-model/gray-scott-model"
+import { GrayScotModelFactory } from '../../../src/lib/gray-scott-model/gray-scott-model'
 
 document.body.innerHTML =
 '<canvas id="gray_scot_model_canvas" width="800" height="500" class="canvas">' +
 '</canvas>';
 
 describe('GrayScotModelSimulator', () => {
+
+  // outline: Check set initialize value to each variables
   it('should set initialize value', () => {
     const wrapper: any = mount(GrayScotModelSimulator)
 
@@ -26,6 +28,7 @@ describe('GrayScotModelSimulator', () => {
     expect(wrapper.vm.$data.defaultTypeList[7]).toMatchObject({value: "worm", label: "worm"}); 
   })
 
+  // outline: Check change pattern paramter when run onChangeType
   it('should change patternType', () => {
     const wrapper: any = mount(GrayScotModelSimulator)
 
@@ -62,6 +65,7 @@ describe('GrayScotModelSimulator', () => {
     expect(wrapper.vm.$data.kill).toBe(0.059);
   })
 
+  // outline: Check draw timing when run onCler
   it('should draw when call onClear', () => {
     const wrapper: any = mount(GrayScotModelSimulator)
     wrapper.vm.draw = jest.fn();
@@ -72,6 +76,7 @@ describe('GrayScotModelSimulator', () => {
     expect(wrapper.vm.draw.mock.results[0]["type"]).toBe("return");
   })
 
+  // outline: Check draw timing when run onUpdate
   it('should draw when call onUpdate', () => {
     const wrapper: any = mount(GrayScotModelSimulator)
     wrapper.vm.draw = jest.fn();
@@ -82,6 +87,7 @@ describe('GrayScotModelSimulator', () => {
     expect(wrapper.vm.draw.mock.results[0]["type"]).toBe("return");
   })
 
+  // outline: Check draw timing when run onStart
   it('should draw when call onStart', () => {
     const wrapper: any = mount(GrayScotModelSimulator)
     wrapper.vm.draw = jest.fn();
@@ -90,6 +96,27 @@ describe('GrayScotModelSimulator', () => {
     expect(wrapper.vm.draw.mock.calls.length).toBe(1);
     expect(wrapper.vm.draw.mock.calls[0][0].length).toBe(100);
     expect(wrapper.vm.draw.mock.results[0]["type"]).toBe("return");
+  })
+
+  // outline: Check arguments when run createGrayScotModel
+  it('should create gray-scott-model with expected arguments', () => {
+    const createMethodMock = jest.fn()
+    GrayScotModelFactory.prototype.create = createMethodMock.mockReturnValue({
+      materialU: Array.from(new Array(100), () => new Array(100).fill(0)),
+      update: () => {}
+    })
+
+    const wrapper: any = mount(GrayScotModelSimulator)
+
+    expect(createMethodMock.mock.calls.length).toBe(1);
+    expect(createMethodMock.mock.calls[0]).toMatchObject([ 0.022, 0.051, 100, 12 ])
+    expect(createMethodMock.mock.results[0]["type"]).toBe("return");
+    
+    wrapper.vm.createGrayScotModel(0.035, 0.065)
+
+    expect(createMethodMock.mock.calls.length).toBe(2);
+    expect(createMethodMock.mock.calls[1]).toMatchObject([ 0.035, 0.065, 100, 12 ])
+    expect(createMethodMock.mock.results[1]["type"]).toBe("return");
   })
 
 })
